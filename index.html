@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pomodoro Timer</title>
+    <link rel="stylesheet" href="style.css" />
+
+
+
+</head>
+
+<body>
+    <div class="main-container">
+        <h1 class="Pomodoro">Pomodoro Timer</h1>
+        <p class="timer">
+            <span id="timer1" class="timer1">0</span>
+        </p>
+        <div class="container2">
+            <button onclick="start()" class="startBtn">START</button>
+            <button onclick="stop()" class="stopBtn">STOP</button>
+            <button onclick="reset()" class="resetBtn">RESET</button>
+            <button onclick="short()" class="shortBreakBtn">SHORT BREAK</button>
+            <button onclick="long()" class="longBreakBtn">LONG BREAK</button>
+
+        </div>
+    </div>
+</body>
+<script>
+    const timerDisplay = document.getElementById("timer1");
+const startBtn = document.querySelector(".startBtn");
+const stopBtn = document.querySelector(".stopBtn");
+const resetBtn = document.querySelector(".resetBtn");
+const shortBreakBtn = document.querySelector(".shortBreakBtn");
+const longBreakBtn = document.querySelector(".longBreakBtn");
+const alarm = new Audio("C:\Users\kalya\Downloads\mixkit-classic-alarm-995.wav");
+
+let time = 25 * 60;
+let timer;
+let isRunning = false;
+
+
+const formatTime = seconds => `${String(Math.floor(seconds / 60)).padStart(2, '0')}:${String(seconds % 60).padStart(2, '0')}`;
+
+const updateTimerDisplay = () => {
+    timerDisplay.textContent = formatTime(time);
+};
+
+const start = () => {
+    if (isRunning) return;
+    isRunning = true;
+    timer = setInterval(() => {
+        time--;
+        updateTimerDisplay();
+        if (time <= 0) {
+            clearInterval(timer);
+            isRunning = false;
+            alarm.play();
+        }
+    }, 1000);
+};
+
+const stop = () => {
+    clearInterval(timer);
+    isRunning = false;
+};
+
+const reset = () => {
+    stop();
+    time = 25 * 60;
+    updateTimerDisplay();
+};
+
+const short = () => {
+    stop();
+    time = 5 * 60;
+    updateTimerDisplay();
+};
+
+const long = () => {
+    stop();
+    time = 15 * 60;
+    updateTimerDisplay();
+};
+
+
+updateTimerDisplay();
+</script>
+
+</html>
